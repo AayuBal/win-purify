@@ -1,0 +1,8 @@
+# OS and IDE files
+Thumbs.db
+Desktop.ini
+.DS_Store
+*.tmp
+*.bak
+.vscode/*
+!.vscode/settings.json
