@@ -14,14 +14,13 @@
 
 <p align="center">
   <b>面向现代 Windows 10 / 11 工作站与竞技 PC 的深度空间回收与后台常驻治理体系</b><br/>
-  支持作为 Antigravity Skill 由 AI Agent 交互编排，亦可在管理员 PowerShell 中独立运行
+  专为 AI Coding Agent（如 Antigravity / Claude Code）设计，支持自然语言唤醒与交互编排
 </p>
 
 [核心能力](#核心能力) •
 [性能基准与实测释放](#性能基准与实测释放) •
-[系统架构与工作流](#系统架构与工作流) •
+[怎么安装与和 AI 对话使用](#怎么安装与和-ai-对话使用) •
 [底层安全机制与反作弊兼容](#底层安全机制与反作弊兼容) •
-[CLI 脚本独立使用指南](#cli-脚本独立使用指南) •
 [商业交付验收清单](#商业交付验收清单)
 
 </div>
@@ -31,7 +30,7 @@
 ## 项目概述
 
 在 Windows 系统的长期使用中，C 盘空间与开机内存常年受到以下不可见的系统级损耗：
-- **历史显卡驱动残留**：显卡驱动（如 NVIDIA / AMD / Intel）历次更新后，旧版完整驱动包（每个约 2.5 ~ 3 GB）被长期留存在 `DriverStore\FileRepository`，系统默认从不主动回收；
+- **历史显卡驱动残留**：显卡驱动（如 NVIDIA / AMD / Intel）历次更新后，旧版完整驱动包（每个约 2.5 ~ 3 GB）被长期留存在 `DriverStore\FileRepository`，系统默认从不自动回收；
 - **大型游戏可选 4K 贴图包**：多数虚幻引擎（Unreal Engine）现代游戏默认捆绑了高分辨率材质大包（`*optional*.pak`），单项占用常达 15 ~ 20 GB，但在常规竞技分辨率与中高画质下并不生效；
 - **长期闲置项目的开发依赖**：归档或未活跃的项目目录中，可再生的 `node_modules`、`.venv`、构建产物累积占用数十 GB；
 - **后台幽灵驻留与唤醒**：Edge 启动加速残留、各类工具自启助手、第三方定时弹窗唤醒计划任务，霸占开机空闲内存；
@@ -91,33 +90,94 @@ Win-Purify 提供了经过严格验证的系统级减负方案，通过原生内
 
 ---
 
-## 系统架构与工作流
+## 怎么安装与和 AI 对话使用
 
-```mermaid
-flowchart TD
-    A["启动 Win-Purify"] --> B["阶段零：四维白名单与边界探查 (Discovery Engine)"]
-    
-    subgraph Discovery ["四维安全审查"]
-        B1["1. 竞技游戏审查: 识别内核反作弊 (ACE / Vanguard / EAC) 锁定安全红线"]
-        B2["2. 生产力审查: 网盘同步 / 远程控制 / 网络代理永久加入保护白名单"]
-        B3["3. 工程资产审查: 区分开发者与非技术用户，圈定代码脱水安全路径"]
-        B4["4. 激进等级确认: 保守级 (缓存垃圾) / 均衡级 (推荐) / 极客级 (Bloatware卸载)"]
-    end
-    
-    B --> Discovery
-    Discovery --> C["定制化执行方案确认"]
-    
-    subgraph Execution ["模块化微创执行"]
-        C1["DriverStore 驱动仓库安全修剪 (无 /force)"]
-        C2["虚幻引擎游戏可选 4K Pak 剥离与着色器重构"]
-        C3["开发工程智能依赖脱水 (源码与 Git 100% 保护)"]
-        C4["后台常驻进程与流氓定时唤醒任务封堵"]
-        C5["虚拟内存 (Pagefile) 科学收窄 (4~8GB 黄金区间)"]
-    end
-    
-    C --> Execution
-    Execution --> D["自动生成《PC 深度减负与系统净化交付报告》"]
+Win-Purify 是一个专为 AI Agent 构建的扩展 Skill。你**不需要手动敲击复杂的 PowerShell 命令**，安装完成后，只要在聊天框中像日常对话一样提出需求，AI 就会自动挂载技能并安全执行。
+
+### 1. 将 Skill 添加到你的 AI 助手
+
+你可以使用通用技能管理器一键安装，或直接克隆至本地 Skills 目录：
+
+```bash
+# 方式 A：使用通用 Agent 技能管理器一键引入
+npx skills add AayuBal/win-purify
+
+# 方式 B：手动克隆至本地 Agent 技能目录（如 Antigravity / Claude Code）
+git clone https://github.com/AayuBal/win-purify.git ~/.gemini/config/skills/win-purify
 ```
+
+---
+
+### 2. 怎么和 AI 对话使用？（常用指令与唤醒场景）
+
+安装好后，直接对 AI 说出你的想法：
+
+#### 场景 1：全盘深度减负与体检（最常用）
+- **你可以这样对 AI 说**：
+  - *“我的 C 盘快满了，帮我做一次深度体检和安全极限减负。”*
+  - *“用 win-purify 帮我全面清理一下系统无用文件和旧驱动。”*
+- **AI 会怎么做**：
+  AI 会自动读取系统 C 盘容量、显卡驱动旧包与自启项，随后启动**四维白名单探查**（询问你常玩什么游戏、哪些网盘和远程软件必须保留、想要多大的清理力度），并在你确认后开始执行。
+
+#### 场景 2：大型游戏专项瘦身（直接腾出 15~20 GB）
+- **你可以这样对 AI 说**：
+  - *“我玩三角洲行动，听说里面有几十个 G 的 4K 材质包用不上，帮我排查清理一下。”*
+  - *“检查一下电脑里的虚幻引擎游戏，把未使用的 optional 贴图大包和旧着色器清理掉。”*
+- **AI 会怎么做**：
+  AI 会自动定位游戏目录，找出 `*optional*.pak` 和 `PSOCache` 着色器缓存，在不影响排位、帧数和核心画质的前提下安全剥离。
+
+#### 场景 3：开机内存过高与后台流氓治理
+- **你可以这样对 AI 说**：
+  - *“开机内存占用太高了，帮我查查有哪些偷偷自启常驻后台的流氓软件。”*
+  - *“帮我把 Edge 关闭后的后台常驻关掉，并清理掉输入法和办公软件的定时唤醒计划任务。”*
+- **AI 会怎么做**：
+  AI 会列出当前开机自启的进程列表，征求你的意见后关闭非必要自启项，并将 Edge 设为完全关闭即释放内存。
+
+#### 场景 4：开发工程依赖安全脱水
+- **你可以这样对 AI 说**：
+  - *“我 D 盘 Projects 文件夹里堆了很多写完的项目，帮我把里面的 node_modules 和 venv 清掉，千万别碰源码。”*
+- **AI 会怎么做**：
+  AI 仅匹配 30 天以上未修改项目中的可再生依赖包，**绝对不触碰任何代码、Markdown 笔记与 .git 历史**。
+
+---
+
+### 3. AI 的安全交互闭环：为什么绝不会“手抖误删”？
+
+无论你下达什么指令，AI 均遵循严格的**三步安全流程**：
+
+```
+[你发送自然语言指令] 
+         ↓
+[第 1 步：AI 交互探查] → 询问你常玩的游戏、必须常驻的工具（如向日葵/微信/网盘）、清理级别
+         ↓
+[第 2 步：方案清单确认] → AI 列出即将清理的每一项具体文件与释放预估，等待你确认
+         ↓
+[第 3 步：执行与验收]   → 调用底层安全脚本执行，最后输出一份清晰的《交付报告》
+```
+
+<details>
+<summary><b>开发者进阶：如何在终端独立运行原生脚本？（点击展开）</b></summary>
+<br/>
+
+如果你处于无法连接 AI 的离线环境，也可以直接在以管理员身份运行的 PowerShell 中使用内置脚本：
+
+```powershell
+# 1. 系统健康与空间只读体检
+.\scripts\Scan-PCStatus.ps1
+
+# 2. 扫描开发项目依赖（默认仅预演，加 -Execute 正式清理）
+.\scripts\Dehydrate-DevProjects.ps1 -RootPath "D:\Projects"
+
+# 3. 驱动仓库安全清理（系统内核自动保护在用驱动，严禁 /force）
+.\scripts\Clean-DriverStore.ps1
+
+# 4. 虚幻引擎可选材质包与旧着色器清理
+.\scripts\Trim-GameAssets.ps1 -Execute
+
+# 5. 系统底层核心与后台常驻优化
+.\scripts\Optimize-WindowsCore.ps1 -RemoveBloatware -DisableSysMain
+```
+</details>
 
 ---
 
@@ -154,59 +214,9 @@ pnputil /delete-driver oemXX.inf
 
 ---
 
-## CLI 脚本独立使用指南
-
-所有 PowerShell 脚本均位于 `scripts/` 目录下，兼容 Windows PowerShell 5.1 及 PowerShell 7+。请在以**管理员身份运行**的终端中执行：
-
-### 1. 系统资源与健康体检 (`Scan-PCStatus.ps1`)
-只读操作，不改动任何系统配置。快速输出 C 盘空间、内存、页面文件、冗余显卡驱动包与开机启动项统计：
-```powershell
-.\scripts\Scan-PCStatus.ps1
-```
-
-### 2. 开发工程无损脱水 (`Dehydrate-DevProjects.ps1`)
-扫描指定目录下长期未活跃的工程并安全清理依赖包：
-```powershell
-# 仅扫描并输出体积统计（默认安全模式，不删除任何文件）
-.\scripts\Dehydrate-DevProjects.ps1 -RootPath "D:\Projects"
-
-# 确认执行脱水物理清理
-.\scripts\Dehydrate-DevProjects.ps1 -RootPath "D:\Projects" -Execute
-```
-
-### 3. 驱动存储库安全清理 (`Clean-DriverStore.ps1`)
-枚举冗余显卡驱动并调用原生 `pnputil` 进行安全卸载：
-```powershell
-# 预演模式，查看哪些驱动将被检查
-.\scripts\Clean-DriverStore.ps1 -WhatIf
-
-# 正式执行安全清理（正在使用的驱动将被系统自动保护保留）
-.\scripts\Clean-DriverStore.ps1
-```
-
-### 4. 虚幻引擎游戏可选材质与着色器清理 (`Trim-GameAssets.ps1`)
-```powershell
-# 扫描虚幻引擎可选材质大包与 DirectX 着色器缓存
-.\scripts\Trim-GameAssets.ps1
-
-# 确认剔除可选 4K Pak 并清空旧着色器
-.\scripts\Trim-GameAssets.ps1 -Execute
-```
-
-### 5. 系统底层核心与驻留优化 (`Optimize-WindowsCore.ps1`)
-```powershell
-# 基础核心优化（Minidump 策略锁定 + Edge 0 驻留 + 禁用流氓计划任务）
-.\scripts\Optimize-WindowsCore.ps1
-
-# 完整优化（包含安全卸载 Windows 11 原生预装应用与停用 SysMain）
-.\scripts\Optimize-WindowsCore.ps1 -RemoveBloatware -DisableSysMain
-```
-
----
-
 ## 商业交付验收清单
 
-通过 Antigravity 调度完成客户电脑优化后，工具将自动生成规范的验收报告：
+通过 AI 调度完成电脑优化后，工具将自动生成规范的验收报告：
 
 ```markdown
 # PC 极限减负与深度净化交付报告
