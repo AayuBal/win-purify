@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/cover.jpg" alt="Win-Purify Banner" width="100%" />
+<img src="assets/cover.svg" alt="Win-Purify Banner" width="100%" />
 
 # Win-Purify
 
@@ -13,54 +13,54 @@
 [![License - MIT](https://img.shields.io/badge/License-MIT-blue?style=flat-square)](LICENSE)
 
 <p align="center">
-  <b>面向现代 Windows 10 / 11 工作站与游戏 PC 的深度空间回收与后台常驻治理体系</b><br/>
+  <b>面向现代 Windows 10 / 11 工作站与竞技 PC 的深度空间回收与后台常驻治理体系</b><br/>
   支持作为 Antigravity Skill 由 AI Agent 交互编排，亦可在管理员 PowerShell 中独立运行
 </p>
 
-[✨ 核心能力](#-核心能力) •
-[📊 典型基准释放对比](#-典型基准释放对比) •
-[🏗️ 系统架构与工作流](#️-系统架构与工作流) •
-[🛡️ 底层安全机制与反作弊兼容](#️-底层安全机制与反作弊兼容) •
-[💻 CLI 脚本独立使用指南](#-cli-脚本独立使用指南) •
-[📋 商业交付验收清单](#-商业交付验收清单)
+[核心能力](#核心能力) •
+[性能基准与实测释放](#性能基准与实测释放) •
+[系统架构与工作流](#系统架构与工作流) •
+[底层安全机制与反作弊兼容](#底层安全机制与反作弊兼容) •
+[CLI 脚本独立使用指南](#cli-脚本独立使用指南) •
+[商业交付验收清单](#商业交付验收清单)
 
 </div>
 
 ---
 
-## 📖 项目概述
+## 项目概述
 
 在 Windows 系统的长期使用中，C 盘空间与开机内存常年受到以下不可见的系统级损耗：
-- **历史显卡驱动残留**：显卡驱动（如 NVIDIA / AMD / Intel）历次更新后，旧版完整驱动包（每个约 2.5 ~ 3 GB）被长期留存在 `DriverStore\FileRepository`，系统默认从不自动回收；
+- **历史显卡驱动残留**：显卡驱动（如 NVIDIA / AMD / Intel）历次更新后，旧版完整驱动包（每个约 2.5 ~ 3 GB）被长期留存在 `DriverStore\FileRepository`，系统默认从不主动回收；
 - **大型游戏可选 4K 贴图包**：多数虚幻引擎（Unreal Engine）现代游戏默认捆绑了高分辨率材质大包（`*optional*.pak`），单项占用常达 15 ~ 20 GB，但在常规竞技分辨率与中高画质下并不生效；
 - **长期闲置项目的开发依赖**：归档或未活跃的项目目录中，可再生的 `node_modules`、`.venv`、构建产物累积占用数十 GB；
 - **后台幽灵驻留与唤醒**：Edge 启动加速残留、各类工具自启助手、第三方定时弹窗唤醒计划任务，霸占开机空闲内存；
 - **动态页面文件无上限膨胀**：系统默认策略在 16GB 物理内存环境下易将分页文件动态拉伸至 14 ~ 18 GB。
 
-**Win-Purify** 提供了经过严格验证的微创减负方案，通过原生内核机制保证：**绝不误删在用驱动、绝不触碰开发源码与 Git 历史、绝不修改影响反作弊的敏感内核参数**。
+Win-Purify 提供了经过严格验证的系统级减负方案，通过原生内核机制保证：**绝不误删在用驱动、绝不触碰开发源码与 Git 历史、绝不修改影响反作弊的敏感内核参数**。
 
 ---
 
-## ✨ 核心能力
+## 核心能力
 
 <table>
   <tr>
     <td width="50%">
-      <h3>💽 驱动仓库安全瘦身</h3>
+      <h3>驱动仓库安全瘦身</h3>
       <p>通过系统底层原生 <code>pnputil</code> 机制扫描显卡与外设驱动库。严格禁止 <code>/force</code> 参数，利用 Windows PnP 核心自动阻断正在使用的驱动，仅安全剔除已解绑的历史废弃包，平均单次释放 <b>2.5 ~ 8 GB</b> 存储。</p>
     </td>
     <td width="50%">
-      <h3>🎮 虚幻引擎游戏可选材质剥离</h3>
+      <h3>虚幻引擎游戏可选材质剥离</h3>
       <p>自动化定位现代虚幻引擎游戏目录下的 <code>*optional*.pak</code> 与 <code>.sig</code> 材质文件。在完全不影响联机匹配、排位竞技与画面稳定性的前提下，单款游戏直接减负 <b>15 ~ 20 GB</b>，并清理损坏的着色器缓存。</p>
     </td>
   </tr>
   <tr>
     <td width="50%">
-      <h3>💻 开发工程智能依赖脱水</h3>
+      <h3>开发工程智能依赖脱水</h3>
       <p>基于项目最后活跃时间，智能识别 30 天以上未修改项目中的 <code>node_modules</code>、<code>.venv</code>、<code>dist</code>、<code>__pycache__</code> 与 VSCode 孤立更新缓存。<b>100% 绝对保护源代码、Markdown 笔记与 .git 历史</b>，随时可用包管理器一键复原。</p>
     </td>
     <td width="50%">
-      <h3>⚡ 开机常驻与后台幽灵压制</h3>
+      <h3>开机常驻与后台幽灵压制</h3>
       <p>封堵 Edge 浏览器后台常驻与启动增强策略；阻断第三方定时唤醒计划任务；锁定系统崩溃转储为 Minidump (256KB) 杜绝数 GB 的巨型 <code>MEMORY.DMP</code>；可选安全卸载 Windows 11 原生臃肿预装应用。</p>
     </td>
   </tr>
@@ -68,7 +68,7 @@
 
 ---
 
-## 📊 典型基准释放对比
+## 性能基准与实测释放
 
 以下数据采集自一台典型 **Windows 11 专业版（Intel Core i7 / 16GB RAM / NVMe SSD）** 主机的实机优化实测：
 
@@ -91,11 +91,11 @@
 
 ---
 
-## 🏗️ 系统架构与工作流
+## 系统架构与工作流
 
 ```mermaid
 flowchart TD
-    A["🚀 启动 Win-Purify"] --> B["阶段零：四维白名单与边界探查 (Discovery Engine)"]
+    A["启动 Win-Purify"] --> B["阶段零：四维白名单与边界探查 (Discovery Engine)"]
     
     subgraph Discovery ["四维安全审查"]
         B1["1. 竞技游戏审查: 识别内核反作弊 (ACE / Vanguard / EAC) 锁定安全红线"]
@@ -116,12 +116,12 @@ flowchart TD
     end
     
     C --> Execution
-    Execution --> D["📄 自动生成《PC 深度减负与系统净化交付报告》"]
+    Execution --> D["自动生成《PC 深度减负与系统净化交付报告》"]
 ```
 
 ---
 
-## 🛡️ 底层安全机制与反作弊兼容
+## 底层安全机制与反作弊兼容
 
 <details open>
 <summary><b>1. 驱动存储库 (DriverStore) 的安全边界</b></summary>
@@ -139,9 +139,9 @@ pnputil /delete-driver oemXX.inf
 <br/>
 
 现代主流大型电竞游戏均采用内核级反作弊驱动（腾讯 ACE、拳头 Vanguard、Easy Anti-Cheat、BattlEye）。Win-Purify 严格恪守以下禁忌：
-- ❌ **严禁修改 `DisablePagingExecutive = 1`**：网络传言将其用于减少卡顿，但在 16GB 物理内存环境下，极易导致驱动锁页内存竞争，直接诱发反作弊内核蓝屏（BSOD）。
-- ❌ **严禁修改 `LargeSystemCache = 1`**：该参数强行将系统调度器切为服务器模型，会把物理内存优先分配给文件系统缓存，严重挤压前台游戏进程的可用内存，导致帧数剧烈波动。
-- ❌ **严禁直接关闭虚拟内存 (Pagefile = 0)**：DirectX 12 现代游戏与反作弊驱动启动时必须申请 Commit Charge 额度，禁用分页文件会导致游戏瞬间闪退并报内存不足。Win-Purify 仅将 16GB 内存主机的页面文件上限固定为 4096 ~ 8192 MB，既满足 Commit 额度，又稳定回收约 10 GB 空间。
+- **严禁修改 `DisablePagingExecutive = 1`**：网络传言将其用于减少卡顿，但在 16GB 物理内存环境下，极易导致驱动锁页内存竞争，直接诱发反作弊内核蓝屏（BSOD）。
+- **严禁修改 `LargeSystemCache = 1`**：该参数强行将系统调度器切为服务器模型，会把物理内存优先分配给文件系统缓存，严重挤压前台游戏进程的可用内存，导致帧数剧烈波动。
+- **严禁直接关闭虚拟内存 (Pagefile = 0)**：DirectX 12 现代游戏与反作弊驱动启动时必须申请 Commit Charge 额度，禁用分页文件会导致游戏瞬间闪退并报内存不足。Win-Purify 仅将 16GB 内存主机的页面文件上限固定为 4096 ~ 8192 MB，既满足 Commit 额度，又稳定回收约 10 GB 空间。
 </details>
 
 <details open>
@@ -154,7 +154,7 @@ pnputil /delete-driver oemXX.inf
 
 ---
 
-## 💻 CLI 脚本独立使用指南
+## CLI 脚本独立使用指南
 
 所有 PowerShell 脚本均位于 `scripts/` 目录下，兼容 Windows PowerShell 5.1 及 PowerShell 7+。请在以**管理员身份运行**的终端中执行：
 
@@ -204,22 +204,22 @@ pnputil /delete-driver oemXX.inf
 
 ---
 
-## 📋 商业交付验收清单
+## 商业交付验收清单
 
 通过 Antigravity 调度完成客户电脑优化后，工具将自动生成规范的验收报告：
 
 ```markdown
-# 💻 PC 极限减负与深度净化交付报告
+# PC 极限减负与深度净化交付报告
 
-- 📅 交付时间：[YYYY-MM-DD HH:mm]
-- 💻 操作系统：Windows 11 专业版
-- 🛡️ 安全状态：100% 通过无损校验，业务文件与游戏存档完好
+- 交付时间：[YYYY-MM-DD HH:mm]
+- 操作系统：Windows 11 专业版
+- 安全状态：100% 通过无损校验，业务文件与游戏存档完好
 
-## 1. 核心战果统计
-- 💽 C 盘可用空间：释放约 [XX] GB（优化前剩余 [XX] GB ➡️ 优化后剩余 [XX] GB）
-- 🚀 开机常驻内存：降低约 [XX] GB（闲置占用从 [XX]% 下降至 [XX]%）
-- 📦 驱动仓库清理：通过 Windows PnP 机制安全剔除了 [X] 个历史显卡驱动包
-- 👻 后台驻留优化：关闭了 [X] 个非核心自启动程序与后台静默唤醒任务
+## 1. 核心资源变化
+- C 盘可用空间：从 [XX] GB 提升至 [XX] GB（净释放约 [XX] GB）
+- 开机闲置内存：从 [XX] GB ([XX]%) 下降至 [XX] GB ([XX]%)
+- 驱动仓库清理：通过 Windows PnP 机制安全剔除了 [X] 个历史显卡驱动包
+- 后台驻留优化：关闭了 [X] 个非核心自启动程序与后台静默唤醒任务
 
 ## 2. 资产保留证明
 - [x] 游戏与反作弊：已针对 [客户游戏列表] 进行内核参数隔离，反作弊环境完好
@@ -232,12 +232,13 @@ pnputil /delete-driver oemXX.inf
 
 ---
 
-## 📂 项目结构
+## 项目结构
 
 ```
 win-purify/
 ├── assets/
-│   └── cover.jpg                     # 项目官方视觉封面海报
+│   ├── cover.svg                     # 项目官方矢量手撕拼贴封面海报
+│   └── cover.jpg                     # 项目轻科技视觉备用位
 ├── SKILL.md                          # Antigravity Skill 调度规则与问答 SOP
 ├── README.md                         # 项目官方中文文档
 ├── LICENSE                           # MIT 开源许可证
@@ -254,6 +255,6 @@ win-purify/
 
 ---
 
-## 📄 开源许可证
+## 开源许可证
 
 本项目基于 [MIT License](LICENSE) 开源。欢迎在遵守开源协议的前提下自由使用与商业交付。
